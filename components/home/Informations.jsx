@@ -9,7 +9,9 @@ const roboto = Roboto({
 });
 const Informations = () => {
   return (
-    <div className={`flex justify-around items-center py-10`}>
+    <div
+      className={`flex md:flex-row flex-col justify-around items-center py-10`}
+    >
       <div className="flex flex-col items-center p-10 ">
         <FaTruck size={50} />
         <h1 className="font-bold pb-3 text-[18px]">Shipping Available</h1>
