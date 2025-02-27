@@ -1,8 +1,11 @@
-import Slider from "@/compenents/home/Slider";
+import Informations from "@/components/home/Informations";
+import Slider from "@/components/home/Slider";
+
 export default function Home() {
   return (
-    <div className="container mx-auto">
+    <div className="">
       <Slider />
+      <Informations />
     </div>
   );
 }
