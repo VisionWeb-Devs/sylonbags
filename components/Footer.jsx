@@ -1,7 +1,7 @@
 // components/Footer.jsx
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../assets/logonobg.png";
+import logo from "../assets/logonobg1.png";
 export default function Footer() {
   return (
     <footer className="bg-[#141824] text-white py-12 px-6">

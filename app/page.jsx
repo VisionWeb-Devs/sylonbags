@@ -394,7 +394,8 @@ const data = [
     },
   },
 ];
-
+import Categories from "@/components/home/Categories";
+import TopSellingItems from "@/components/home/TopSellingItems";
 export default function Home() {
   // const { data, loading, error } = useFetchData(
   //   process.env.NEXT_PUBLIC_BACKEND_URL +
@@ -404,6 +405,8 @@ export default function Home() {
   return (
     <div className="">
       <Slider />
+      <Categories />
+      <TopSellingItems />
       <Informations />
     </div>
   );

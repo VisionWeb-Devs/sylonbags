@@ -28,7 +28,7 @@ const Header = () => {
             <Link
               className={`${
                 pathname === "/"
-                  ? "font-bold underline underline-offset-2"
+                  ? "font-bold underline underline-offset-6 "
                   : " "
               }`}
               href="/"

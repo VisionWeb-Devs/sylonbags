@@ -79,7 +79,7 @@ const Slider = () => {
           <h1
             className={`${
               playfair.className
-            } transition-opacity duration-1000 ease-in-out text-[80px]  text-white mb-4 ${
+            } transition-opacity duration-1000 ease-in-out text-[50px] md:text-[80px]  text-white mb-4 ${
               textVisible ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -88,7 +88,7 @@ const Slider = () => {
           <h2
             className={`${
               roboto.className
-            } transition-opacity duration-1000 ease-in-out text-[20px] text-white ${
+            } transition-opacity duration-1000 ease-in-out text-[20px] md:text-[30px] text-white ${
               textVisible ? "opacity-100" : "opacity-0"
             }`}
           >

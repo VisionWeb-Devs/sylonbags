@@ -1,4 +1,5 @@
 import { Roboto } from "next/font/google";
+import Link from "next/link";
 import React from "react";
 
 const roboto = Roboto({
@@ -6,48 +7,44 @@ const roboto = Roboto({
   weight: ["400", "700"],
 });
 
-const ProductCard = () => {
-  const products = [
-    {
-      id: "1",
-      name: "Signature Tote",
-      price: 399.0,
-      salePrice: 0,
-      image:
-        "https://media.discordapp.net/attachments/868137008634155089/1344726726537642135/image.png?ex=67c1f5db&is=67c0a45b&hm=6cbd739b0a66791292850e7c3662911cb5d1758c90a0441bd87e2390ef8f5f0b&=&format=webp&quality=lossless&width=284&height=350",
-    },
-  ];
-  const product = products[0];
+const ProductCard = ({ product }) => {
+  if (!product) {
+    return null;
+  }
 
   return (
-    <div
-      className={`w-full max-w-xs flex flex-col transform transition-transform duration-300 hover:scale-105 ${roboto.className}`}
-    >
-      <div className="relative w-full overflow-hidden bg-gray-100">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="mt-4">
-        <h3 className="text-[18px] font-bold">{product.name}</h3>
-        <div className="flex gap-2 mt-1">
-          {product.salePrice ? (
-            <>
-              <p className="text-red-600 text-[16px]">
-                ${product.salePrice.toFixed(2)}
+    <Link href={`/shop/${product.slug}`} passHref>
+      <div
+        className={`w-full rounded-2xl max-w-xs flex flex-col transform transition-transform duration-300 hover:scale-105 ${roboto.className}`}
+      >
+        <div className="relative w-full h-[344px] overflow-hidden bg-gray-100 rounded-2xl">
+          <img
+            src={product.thumbnail.url}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="mt-4">
+          <h3 className="text-[16px] font-bold opacity-80">{product.name}</h3>
+          <div className="flex gap-2 mt-1">
+            {product.discount_price ? (
+              <>
+                <p className="text-black text-[25px] font-extralight tracking-wider">
+                  DA {product.discount_price}
+                </p>
+                <p className="text-gray-800 line-through font-extralight tracking-wider">
+                  DA {product.price}
+                </p>
+              </>
+            ) : (
+              <p className="text-black text-[25px] font-extralight tracking-wider">
+                DA {product.price}
               </p>
-              <p className="text-gray-500 line-through text-[16px]">
-                ${product.price.toFixed(2)}
-              </p>
-            </>
-          ) : (
-            <p>${product.price.toFixed(2)}</p>
-          )}
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
