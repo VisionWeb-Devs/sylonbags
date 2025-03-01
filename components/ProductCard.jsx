@@ -25,7 +25,9 @@ const ProductCard = ({ product }) => {
           />
         </div>
         <div className="mt-4">
-          <h3 className="text-[16px] font-bold opacity-80">{product.name}</h3>
+          <h3 className="text-[16px] font-bold opacity-80 tracking-wider">
+            {product.name}
+          </h3>
           <div className="flex gap-2 mt-1">
             {product.discount_price ? (
               <>

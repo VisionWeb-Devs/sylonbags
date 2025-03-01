@@ -1,11 +1,11 @@
-"use client";
+import React from "react";
+import { Playfair, Roboto } from "next/font/google";
 import ProductCard from "@/components/ProductCard";
-import ProductFilterSidebar from "@/components/shop/ProductFilterSidebar";
-import React, { useState, useCallback, useEffect } from "react";
-import { Filter, ChevronLeft, ChevronRight } from "lucide-react";
-import useFetchData from "@/hooks/useFetchData";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+
+const playfair = Playfair({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 const productss = [
   {
@@ -77,7 +77,6 @@ const productss = [
       updatedAt: "2025-02-27T17:42:31.668Z",
       publishedAt: "2025-02-27T17:42:31.670Z",
     },
-    categories: [],
   },
   {
     id: 14,
@@ -184,15 +183,14 @@ const productss = [
       updatedAt: "2025-02-27T15:51:22.166Z",
       publishedAt: "2025-02-27T15:51:22.168Z",
     },
-    categories: [],
   },
   {
-    id: 20,
+    id: 15,
     documentId: "p338ae2u1e6hfuo24omapx5s",
     price: 8500,
     createdAt: "2025-02-27T15:06:15.372Z",
-    updatedAt: "2025-02-28T16:04:09.263Z",
-    publishedAt: "2025-02-28T16:04:11.893Z",
+    updatedAt: "2025-02-27T18:24:17.805Z",
+    publishedAt: "2025-02-27T18:24:20.018Z",
     slug: "daphne-espresso",
     tags: "bag bags espresso women",
     name: "Daphne Espresso",
@@ -292,36 +290,14 @@ const productss = [
       updatedAt: "2025-02-27T16:32:01.551Z",
       publishedAt: "2025-02-27T16:32:01.553Z",
     },
-    categories: [
-      {
-        id: 4,
-        documentId: "fddk8c3vsk0bsawq3pifekgl",
-        name: "women",
-        description: "women products",
-        slug: "women",
-        createdAt: "2025-02-27T16:39:26.868Z",
-        updatedAt: "2025-02-27T16:39:26.868Z",
-        publishedAt: "2025-02-27T16:39:26.965Z",
-      },
-      {
-        id: 2,
-        documentId: "p1e63xffrni3pkeq4mh0etrd",
-        name: "bags",
-        description: null,
-        slug: "bags",
-        createdAt: "2025-02-27T14:50:11.661Z",
-        updatedAt: "2025-02-27T14:50:14.377Z",
-        publishedAt: "2025-02-27T14:50:14.478Z",
-      },
-    ],
   },
   {
-    id: 21,
+    id: 16,
     documentId: "v2ja8p3fc3sez5wgc5r60l53",
     price: 4599,
     createdAt: "2025-02-27T15:56:22.056Z",
-    updatedAt: "2025-02-28T16:07:05.493Z",
-    publishedAt: "2025-02-28T16:07:08.362Z",
+    updatedAt: "2025-02-27T18:24:37.736Z",
+    publishedAt: "2025-02-27T18:24:39.808Z",
     slug: "giselle-burgundy",
     tags: "handbag sac espresso women",
     name: "Giselle Burgundy",
@@ -420,332 +396,20 @@ const productss = [
       updatedAt: "2025-02-27T15:55:16.633Z",
       publishedAt: "2025-02-27T15:55:16.634Z",
     },
-    categories: [
-      {
-        id: 4,
-        documentId: "fddk8c3vsk0bsawq3pifekgl",
-        name: "women",
-        description: "women products",
-        slug: "women",
-        createdAt: "2025-02-27T16:39:26.868Z",
-        updatedAt: "2025-02-27T16:39:26.868Z",
-        publishedAt: "2025-02-27T16:39:26.965Z",
-      },
-    ],
-  },
-  {
-    id: 22,
-    documentId: "pj60dql6omhc5zhlpdkmayyd",
-    price: 4599,
-    createdAt: "2025-02-27T15:58:32.372Z",
-    updatedAt: "2025-02-28T16:07:34.987Z",
-    publishedAt: "2025-02-28T16:07:37.685Z",
-    slug: "giselle-noir",
-    tags: "handbag bag bags sac noir black women",
-    name: "Giselle Noir",
-    feature: "top_selling",
-    discount_price: null,
-    thumbnail: {
-      id: 6,
-      documentId: "qnsdsdxmfj88e5wm7p98o8xx",
-      name: "37E75270-81F8-4160-9741-8B977430F222.jpg",
-      alternativeText: null,
-      caption: null,
-      width: 1061,
-      height: 1607,
-      formats: {
-        large: {
-          ext: ".jpg",
-          url: "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671716/large_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541.jpg",
-          hash: "large_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-          mime: "image/jpeg",
-          name: "large_37E75270-81F8-4160-9741-8B977430F222.jpg",
-          path: null,
-          size: 18.94,
-          width: 660,
-          height: 1000,
-          sizeInBytes: 18941,
-          provider_metadata: {
-            public_id:
-              "large_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-            resource_type: "image",
-          },
-        },
-        small: {
-          ext: ".jpg",
-          url: "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671716/small_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541.jpg",
-          hash: "small_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-          mime: "image/jpeg",
-          name: "small_37E75270-81F8-4160-9741-8B977430F222.jpg",
-          path: null,
-          size: 5.98,
-          width: 330,
-          height: 500,
-          sizeInBytes: 5979,
-          provider_metadata: {
-            public_id:
-              "small_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-            resource_type: "image",
-          },
-        },
-        medium: {
-          ext: ".jpg",
-          url: "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671716/medium_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541.jpg",
-          hash: "medium_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-          mime: "image/jpeg",
-          name: "medium_37E75270-81F8-4160-9741-8B977430F222.jpg",
-          path: null,
-          size: 11.47,
-          width: 495,
-          height: 750,
-          sizeInBytes: 11470,
-          provider_metadata: {
-            public_id:
-              "medium_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-            resource_type: "image",
-          },
-        },
-        thumbnail: {
-          ext: ".jpg",
-          url: "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671715/thumbnail_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541.jpg",
-          hash: "thumbnail_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-          mime: "image/jpeg",
-          name: "thumbnail_37E75270-81F8-4160-9741-8B977430F222.jpg",
-          path: null,
-          size: 1.34,
-          width: 103,
-          height: 156,
-          sizeInBytes: 1335,
-          provider_metadata: {
-            public_id:
-              "thumbnail_37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-            resource_type: "image",
-          },
-        },
-      },
-      hash: "37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-      ext: ".jpg",
-      mime: "image/jpeg",
-      size: 42.46,
-      url: "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671715/37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541.jpg",
-      previewUrl: null,
-      provider: "cloudinary",
-      provider_metadata: {
-        public_id: "37_E75270_81_F8_4160_9741_8_B977430_F222_0c917cf541",
-        resource_type: "image",
-      },
-      createdAt: "2025-02-27T15:55:17.638Z",
-      updatedAt: "2025-02-27T15:55:17.638Z",
-      publishedAt: "2025-02-27T15:55:17.639Z",
-    },
-    categories: [
-      {
-        id: 4,
-        documentId: "fddk8c3vsk0bsawq3pifekgl",
-        name: "women",
-        description: "women products",
-        slug: "women",
-        createdAt: "2025-02-27T16:39:26.868Z",
-        updatedAt: "2025-02-27T16:39:26.868Z",
-        publishedAt: "2025-02-27T16:39:26.965Z",
-      },
-      {
-        id: 2,
-        documentId: "p1e63xffrni3pkeq4mh0etrd",
-        name: "bags",
-        description: null,
-        slug: "bags",
-        createdAt: "2025-02-27T14:50:11.661Z",
-        updatedAt: "2025-02-27T14:50:14.377Z",
-        publishedAt: "2025-02-27T14:50:14.478Z",
-      },
-    ],
   },
 ];
 
-const ShopPage = () => {
-  const searchParams = useSearchParams();
-  const currentPage = parseInt(searchParams.get("page") || "1", 10);
-  const pageSize = 8;
-
-  // const { data, loading, error } = useFetchData(
-  //   process.env.NEXT_PUBLIC_BACKEND_URL +
-  //     `/products?populate=*&pagination[page]=${page_number}&pagination[pageSize]=${page_size}`
-  // );
-  // console.log(data, loading, error);
-
-  const [filters, setFilters] = useState({
-    priceRange: 9999999999,
-    selectedColors: [],
-    selectedCategories: [],
-  });
-
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-
-  const totalProducts = productss.length;
-  const totalPages = Math.ceil(totalProducts / pageSize);
-  const createPageUrl = (pageNum) => {
-    return `/shop?page=${pageNum}`;
-  };
-
-  const handleFilterChange = useCallback((newFilters) => {
-    setFilters(newFilters);
-
-    let results = [...productss];
-
-    if (newFilters.priceRange < Infinity) {
-      results = results.filter(
-        (product) => product.price <= newFilters.priceRange
-      );
-    }
-
-    if (newFilters.selectedColors.length > 0) {
-      results = results.filter((product) =>
-        newFilters.selectedColors.includes(product.color)
-      );
-    }
-
-    if (newFilters.selectedCategories.length > 0) {
-      results = results.filter((product) =>
-        newFilters.selectedCategories.some(
-          (category) => category === product.category
-        )
-      );
-    }
-
-    setFilteredProducts(results);
-  }, []);
-
-  const paginatedProducts = useCallback(() => {
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    return filteredProducts.slice(startIndex, endIndex);
-  }, [filteredProducts, currentPage, pageSize]);
-
-  useEffect(() => {
-    handleFilterChange(filters);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMobileFilterOpen(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+const RelatedProduct = () => {
   return (
-    <div className="bg-[#F9FAFB] min-h-screen">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Shop</h1>
-          <button
-            className="md:hidden flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm"
-            onClick={() => setIsMobileFilterOpen(true)}
-          >
-            <Filter size={18} />
-            <span>Filters</span>
-          </button>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-8">
-          <ProductFilterSidebar
-            onFilterChange={handleFilterChange}
-            isOpen={isMobileFilterOpen}
-            onClose={() => setIsMobileFilterOpen(false)}
-          />
-
-          <div className="flex-1 bg-[#F9FAFB] flex flex-col">
-            <div className="mb-4">
-              <h2 className="text-xl font-medium">
-                {filteredProducts.length} Products Found
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 py-6">
-              {paginatedProducts().map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-
-              {filteredProducts.length === 0 && (
-                <div className="col-span-full py-16 text-center">
-                  <p className="text-gray-500 text-lg">
-                    No products match your filters.
-                  </p>
-                  <button
-                    onClick={() =>
-                      handleFilterChange({
-                        priceRange: 9999999999,
-                        selectedColors: [],
-                        selectedCategories: [],
-                      })
-                    }
-                    className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                  >
-                    Reset Filters
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Pagination */}
-            {filteredProducts.length > 0 && (
-              <div className="flex items-center justify-center space-x-2 my-8">
-                <Link
-                  href={currentPage > 1 ? createPageUrl(currentPage - 1) : "#"}
-                  className={`p-2 rounded-md border ${
-                    currentPage <= 1
-                      ? "text-gray-400 border-gray-200 cursor-not-allowed"
-                      : "text-gray-600 border-gray-300 hover:bg-gray-50"
-                  }`}
-                  aria-disabled={currentPage <= 1}
-                >
-                  <ChevronLeft size={20} />
-                </Link>
-
-                {[...Array(totalPages)].map((_, index) => {
-                  const pageNumber = index + 1;
-                  return (
-                    <Link
-                      key={pageNumber}
-                      href={createPageUrl(pageNumber)}
-                      className={`px-4 py-2 rounded-md ${
-                        currentPage === pageNumber
-                          ? "bg-blue-600 text-white"
-                          : "text-gray-600 hover:bg-gray-50"
-                      }`}
-                    >
-                      {pageNumber}
-                    </Link>
-                  );
-                })}
-
-                <Link
-                  href={
-                    currentPage < totalPages
-                      ? createPageUrl(currentPage + 1)
-                      : "#"
-                  }
-                  className={`p-2 rounded-md border ${
-                    currentPage >= totalPages
-                      ? "text-gray-400 border-gray-200 cursor-not-allowed"
-                      : "text-gray-600 border-gray-300 hover:bg-gray-50"
-                  }`}
-                  aria-disabled={currentPage >= totalPages}
-                >
-                  <ChevronRight size={20} />
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
+    <div className={`py-10  flex flex-col ${playfair.className}`}>
+      <h1 className="text-4xl">Related Product</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-10 justify-center items-center">
+        {productss.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </div>
   );
 };
 
-export default ShopPage;
+export default RelatedProduct;
