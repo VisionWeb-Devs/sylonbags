@@ -136,7 +136,7 @@ export default function Footer() {
       </div>
 
       <div className="  pt-8 mt-8 border-t border-gray-800 text-gray-400 text-sm  justify-centerflex items-center text-center w-full">
-        <p>© 2024 Luxury Bags.</p>
+        <p>© 2025 Luxury Bags.</p>
       </div>
     </footer>
   );

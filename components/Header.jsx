@@ -62,7 +62,7 @@ const Header = () => {
             <Link
               className={`${
                 pathname.includes("category")
-                  ? "font-bold underline underline-offset-6"
+                  ? "font-bold underline underline-offset-"
                   : " "
               }`}
               href="/category"
@@ -79,7 +79,7 @@ const Header = () => {
             <Link
               className={`${
                 pathname.includes("aboutUs")
-                  ? "font-bold underline underline-offset-6"
+                  ? "font-bold underline underline-offset-"
                   : " "
               }`}
               href="/aboutUs"
@@ -96,7 +96,7 @@ const Header = () => {
             <Link
               className={`${
                 pathname.includes("contact")
-                  ? "font-bold underline underline-offset-6"
+                  ? "font-bold underline underline-offset-"
                   : " "
               }`}
               href="/contact"
@@ -119,7 +119,7 @@ const Header = () => {
               <Link
                 className={`${
                   pathname === "/"
-                    ? "font-bold underline underline-offset-6"
+                    ? "font-bold underline underline-offset-"
                     : " "
                 }`}
                 href="/"
@@ -133,7 +133,7 @@ const Header = () => {
                 href="/shop"
                 className={`${
                   pathname.includes("shop")
-                    ? "font-bold underline underline-offset-6"
+                    ? "font-bold underline underline-offset-"
                     : " "
                 }`}
                 onClick={() => setIsMenuOpen(false)}
@@ -145,7 +145,7 @@ const Header = () => {
               <Link
                 className={`${
                   pathname.includes("category")
-                    ? "font-bold underline underline-offset-6"
+                    ? "font-bold underline underline-offset-"
                     : " "
                 }`}
                 href="/category"
@@ -158,7 +158,7 @@ const Header = () => {
               <Link
                 className={`${
                   pathname.includes("aboutUs")
-                    ? "font-bold underline underline-offset-6"
+                    ? "font-bold underline underline-offset-"
                     : " "
                 }`}
                 href="/aboutUs"
@@ -171,7 +171,7 @@ const Header = () => {
               <Link
                 className={`${
                   pathname.includes("contact")
-                    ? "font-bold underline underline-offset-6"
+                    ? "font-bold underline underline-offset-"
                     : " "
                 }`}
                 href="/contact"
