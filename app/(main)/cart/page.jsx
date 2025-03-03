@@ -3,6 +3,7 @@ import { Trash2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Playfair } from "next/font/google";
 import useFetchData from "@/hooks/useFetchData";
+import Link from "next/link";
 
 const playfair = Playfair({
   subsets: ["latin"],
@@ -245,13 +246,14 @@ const ShoppingCartPage = () => {
               <span>DA {orderSummary.total.toFixed(2)}</span>
             </div>
           </div>
-
-          <button
-            className="w-full bg-[#ffddd5] text-black py-3 rounded mb-4  font-light tracking-widest opacity-80 hover:opacity-100  hover:bg-[#efb7ab] duration-400"
-            onClick={handleCheckout}
-          >
-            Proceed to Checkout
-          </button>
+          <Link href="cart/checkout">
+            <button
+              className="w-full bg-[#ffddd5] text-black py-3 rounded mb-4  font-light tracking-widest opacity-80 hover:opacity-100  hover:bg-[#efb7ab] duration-400"
+              onClick={handleCheckout}
+            >
+              Proceed to Checkout
+            </button>
+          </Link>
         </div>
       </div>
     </div>

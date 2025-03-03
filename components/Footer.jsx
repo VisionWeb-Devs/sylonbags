@@ -16,7 +16,6 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Quick Links */}
         <div>
           <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
           <nav className="flex flex-col space-y-2">
@@ -136,7 +135,7 @@ export default function Footer() {
       </div>
 
       <div className="  pt-8 mt-8 border-t border-gray-800 text-gray-400 text-sm  justify-centerflex items-center text-center w-full">
-        <p>© 2025 Luxury Bags.</p>
+        <p>© {new Date().getFullYear()} Luxury Bags.</p>
       </div>
     </footer>
   );
