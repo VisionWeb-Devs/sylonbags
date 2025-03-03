@@ -1,5 +1,6 @@
 import React from "react";
 import { Playfair, Roboto } from "next/font/google";
+import Link from "next/link";
 
 const playfair = Playfair({
   subsets: ["latin"],
@@ -12,9 +13,10 @@ const roboto = Roboto({
 });
 
 const Categories = () => {
-  const products = [
+  const categories = [
     {
       id: "1",
+      link: "category/womens-bags",
       name: "Women's Bags",
       desc: "Shop our collection of elegant women's handbags",
       image:
@@ -22,6 +24,7 @@ const Categories = () => {
     },
     {
       id: "2",
+      link: "category/mens-bags",
       name: "Men's Bags",
       desc: "Discover premium leather bags for men",
       image:
@@ -29,6 +32,7 @@ const Categories = () => {
     },
     {
       id: "3",
+      link: "category/travel-bags",
       name: "Travel Bags",
       desc: "Perfect companions for your journeys",
       image:
@@ -36,6 +40,7 @@ const Categories = () => {
     },
     {
       id: "4",
+      link: "category/accessories",
       name: "Accessories",
       desc: "Wallets, cardholders and more",
       image:
@@ -46,27 +51,31 @@ const Categories = () => {
   return (
     <div className="py-10 justify-center items-center flex flex-col tracking-wider">
       <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-9 py-10  px-10">
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className={`flex flex-col transform transition-transform duration-300 hover:scale-105 cursor-pointer ${roboto.className}`}
-          >
-            <div className="relative w-full overflow-hidden bg-gray-100">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="mt-4">
-              <h3 className="text-[18px] font-bold text-center md:text-start">
-                {product.name}
-              </h3>
-              <div className="flex gap-2 mt-1">
-                <p className="text-[16px] hidden md:block  ">{product.desc}</p>
+        {categories.map((product) => (
+          <Link href={product.link}>
+            <div
+              key={product.id}
+              className={`flex flex-col transform transition-transform duration-300 hover:scale-105 cursor-pointer ${roboto.className}`}
+            >
+              <div className="relative w-full overflow-hidden bg-gray-100">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="mt-4">
+                <h3 className="text-[18px] font-bold text-center md:text-start">
+                  {product.name}
+                </h3>
+                <div className="flex gap-2 mt-1">
+                  <p className="text-[16px] hidden md:block  ">
+                    {product.desc}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
