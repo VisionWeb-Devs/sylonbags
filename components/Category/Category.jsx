@@ -47,6 +47,11 @@ const Categories = () => {
         "https://cdn.discordapp.com/attachments/868137008634155089/1344732061684207728/image.png?ex=67c1fad3&is=67c0a953&hm=5a7b2abf050b5b36e8031f7140dadb0f7051b7286936d0b0c3940eb8a72e9ea9&",
     },
   ];
+  const { data, loading, error } = useFetchData(
+    process.env.NEXT_PUBLIC_BACKEND_URL +
+      `/products?filters[categories][slug][$eq]=${category_slug}&pagination[limit]=4&populate=*`
+  );
+  console.log(data);
 
   return (
     <div className="py-10 justify-center items-center flex flex-col tracking-wider">

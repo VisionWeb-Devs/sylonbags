@@ -2,6 +2,7 @@
 import { Trash2 } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Playfair } from "next/font/google";
+import useFetchData from "@/hooks/useFetchData";
 import Link from "next/link";
 
 const playfair = Playfair({
@@ -9,27 +10,48 @@ const playfair = Playfair({
   weight: ["400", "700"],
 });
 
+const cart = [
+  {
+    quantity: 1,
+    slug: "cecile-camel",
+    sku: "cec-cam-bla",
+  },
+  {
+    quantity: 2,
+    slug: "giselle-noir",
+
+    sku: "gis-noi-bla",
+  },
+];
+
 const ShoppingCartPage = () => {
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
-      name: "Classic Leather Tote",
-      description: "Premium leather tote bag",
-      price: 5990,
+      name: "Cecile Camel",
+      description: "Cecile Camel Bag",
+      price: 250,
       quantity: 1,
-      image:
-        "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671481/medium_248_EFBA_9_7_C5_D_407_D_9821_445780_BC_79_E5_0c9876b62e.jpg",
+      image: "/images/products/cecile-camel.jpg",
     },
     {
       id: 2,
-      name: "Designer Crossbody",
-      description: "Elegant crossbody bag",
-      price: 4290,
-      quantity: 1,
-      image:
-        "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671481/medium_248_EFBA_9_7_C5_D_407_D_9821_445780_BC_79_E5_0c9876b62e.jpg",
+      name: "Giselle Noir",
+      description: "Giselle Noir Bag",
+      price: 300,
+      quantity: 2,
+      image: "/images/products/giselle-noir.jpg",
     },
   ]);
+
+  // const { data, loading, error } = useFetchData(
+  //   process.env.NEXT_PUBLIC_BACKEND_URL +
+  //     "/products/" +
+  //     cart.map((item) => item.slug).join(",") +
+  //     "/" +
+  //     cart.map((item) => item.sku).join(",")
+  // );
+  // console.log(data, loading, error);
 
   const [orderSummary, setOrderSummary] = useState({
     subtotal: 0,

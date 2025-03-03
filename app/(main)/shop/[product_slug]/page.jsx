@@ -252,12 +252,12 @@ const page = () => {
       },
     ],
   };
-  // const { product_slug } = useParams();
-  // const { data, loading, error } = useFetchData(
-  //   process.env.NEXT_PUBLIC_BACKEND_URL + `/products/${product_slug}`
-  // );
-  // const productt = data;
-  // console.log(data, loading, error);
+  const { product_slug } = useParams();
+  const { data, loading, error } = useFetchData(
+    process.env.NEXT_PUBLIC_BACKEND_URL + `/products/${product_slug}`
+  );
+  const productt = data;
+  console.log(data, loading, error);
   // if (loading) return <div>Loading...</div>;
   // if (error) return <div>Error: {error}</div>;
 
@@ -266,7 +266,7 @@ const page = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full  py-8">
       <ProductPage product={product} key={product.id} />
-      <RelatedProduct />
+      <RelatedProduct category_slug={product.categories[0].slug} />
     </div>
   );
 };

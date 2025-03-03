@@ -566,7 +566,7 @@ const productss = [
 const ShopPage = () => {
   const searchParams = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
-  const pageSize = 8;
+  const pageSize = 1;
 
   // const { data, loading, error } = useFetchData(
   //   process.env.NEXT_PUBLIC_BACKEND_URL +
