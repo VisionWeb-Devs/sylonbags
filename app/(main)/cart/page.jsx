@@ -194,7 +194,7 @@ const ShoppingCartPage = () => {
                 </div>
                 <div className="text-right">
                   <p className="font-bold tracking-wider opacity-85">
-                    DA{" "}
+                    DA {"  "}
                     {(item.price * quantities[item.variants[0].sku]).toFixed(2)}
                   </p>
                   <button
