@@ -4,36 +4,44 @@ import React, { useState, useEffect } from "react";
 import { Playfair } from "next/font/google";
 import useFetchData from "@/hooks/useFetchData";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const playfair = Playfair({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
 
-const cart = [
-  {
-    quantity: 1,
-    slug: "cecile-camel",
-    sku: "cec-cam-bla",
-  },
-  {
-    quantity: 2,
-    slug: "giselle-noir",
-    sku: "gis-noi-bla",
-  },
-];
+const getInitialCart = () => {
+  const cart = localStorage.getItem("SylonCart");
+  return cart ? JSON.parse(cart) : [];
+};
 
 const ShoppingCartPage = () => {
+  const router = useRouter();
+
+  const [cartItems, setCartItems] = useState([]);
+  const initialCart = getInitialCart();
+
   const { data, loading, error } = useFetchData(
     process.env.NEXT_PUBLIC_BACKEND_URL +
       "/products/" +
-      cart.map((item) => item.slug).join(",") +
+      initialCart.map((item) => item.slug).join(",") +
       "/" +
-      cart.map((item) => item.sku).join(",")
+      initialCart.map((item) => item.sku).join(",")
   );
-  console.log(" hello", data, loading, error);
-  const cartItem = data;
-  const [cartItems, setCartItems] = useState(cartItem);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const updatedCartItems = data.map((product) => {
+        const cartItem = initialCart.find((item) => item.slug === product.slug);
+        return {
+          ...product,
+          quantity: cartItem ? cartItem.quantity : 1,
+        };
+      });
+      setCartItems(updatedCartItems);
+    }
+  }, [data]);
 
   const [orderSummary, setOrderSummary] = useState({
     subtotal: 0,
@@ -41,19 +49,22 @@ const ShoppingCartPage = () => {
   });
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
-  const [quantities, setQuantities] = useState(() => {
-    const initialQuantities = {};
-    cartItems.forEach((item) => {
-      initialQuantities[item.id] = 1;
-    });
-    return initialQuantities;
-  });
+  const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
-    const subtotal = cartItems.reduce(
-      (sum, item) => sum + item.price * (quantities[item.id] || 1),
-      0
-    );
+    const initialQuantities = {};
+    cartItems.forEach((item) => {
+      const sku = item.variants && item.variants[0] ? item.variants[0].sku : "";
+      initialQuantities[sku] = item.quantity || 1;
+    });
+    setQuantities(initialQuantities);
+  }, [cartItems]);
+
+  useEffect(() => {
+    const subtotal = cartItems.reduce((sum, item) => {
+      const sku = item.variants && item.variants[0] ? item.variants[0].sku : "";
+      return sum + item.price * (quantities[sku] || 1);
+    }, 0);
 
     const total = subtotal - discount;
 
@@ -63,20 +74,25 @@ const ShoppingCartPage = () => {
     });
   }, [cartItems, quantities, discount]);
 
-  const handleQuantityChange = (id, newQuantity) => {
+  const handleQuantityChange = (sku, newQuantity) => {
     if (newQuantity > 0) {
       setQuantities((prevQuantities) => ({
         ...prevQuantities,
-        [id]: newQuantity,
+        [sku]: newQuantity,
       }));
     }
   };
 
-  const handleRemoveItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+  const handleRemoveItem = (sku) => {
+    setCartItems(
+      cartItems.filter(
+        (item) =>
+          item.variants && item.variants[0] && item.variants[0].sku !== sku
+      )
+    );
     setQuantities((prevQuantities) => {
       const newQuantities = { ...prevQuantities };
-      delete newQuantities[id];
+      delete newQuantities[sku];
       return newQuantities;
     });
   };
@@ -89,29 +105,40 @@ const ShoppingCartPage = () => {
       alert("Invalid coupon code");
     }
   };
-
+  console.log("cartItems", cartItems);
   const handleCheckout = () => {
-    console.log("Proceeding to checkout with items:", cartItems);
-    console.log("Order summary:", orderSummary);
-    console.log("Item quantities:", quantities);
-
     const checkoutData = {
-      items: cartItems.map((item) => ({
-        id: item.id,
-        quantity: quantities[item.id] || 1,
-        price: item.price,
-      })),
+      items: cartItems.map((item) => {
+        const sku =
+          item.variants && item.variants[0] ? item.variants[0].sku : "";
+        return {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: quantities[sku] || 1,
+          variant:
+            item.variants && item.variants[0]
+              ? item.variants[0].colors[0].name
+              : "Unknown",
+          image:
+            item.variants && item.variants[0] && item.variants[0].images
+              ? item.variants[0].images[0].url
+              : "/placeholder-image.jpg",
+        };
+      }),
       couponCode: couponCode,
       subtotal: orderSummary.subtotal,
       discount: discount,
       total: orderSummary.total,
     };
 
-    console.log("Data to send to backend:", checkoutData);
-  };
-  console.log("quantity items ", quantities);
-  console.log("Cart items ", cartItems);
+    localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
 
+    console.log("checkoutData", checkoutData);
+    router.push("/cart/checkout");
+  };
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Your Cart Is Empty</div>;
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -125,7 +152,7 @@ const ShoppingCartPage = () => {
           <div className="space-y-6 mb-6">
             {cartItems.map((item) => (
               <div
-                key={item.id}
+                key={item.variants[0].sku}
                 className="flex items-center border-b-[1px] border-gray-300 pb-4 "
               >
                 <div className="w-24 h-24 bg-gray-200 mr-4">
@@ -137,21 +164,28 @@ const ShoppingCartPage = () => {
                 </div>
                 <div className="flex-grow">
                   <h3 className="font-bold tracking-wide">{item.name}</h3>
-                  <p className="text-gray-600">{item.description}</p>
                   <div className="flex flex-row gap-4 items-center border-[1px] border-gray-500 px-2 rounded-lg w-fit">
                     <button
                       className="py-2 px-3 text-md"
                       onClick={() =>
-                        handleQuantityChange(item.id, quantities[item.id] - 1)
+                        handleQuantityChange(
+                          item.variants[0].sku,
+                          quantities[item.variants[0].sku] - 1
+                        )
                       }
                     >
                       -
                     </button>
-                    <span className="px-2">{quantities[item.id]}</span>
+                    <span className="px-2">
+                      {quantities[item.variants[0].sku]}
+                    </span>
                     <button
                       className="py-2 px-3 text-md"
                       onClick={() =>
-                        handleQuantityChange(item.id, quantities[item.id] + 1)
+                        handleQuantityChange(
+                          item.variants[0].sku,
+                          quantities[item.variants[0].sku] + 1
+                        )
                       }
                     >
                       +
@@ -160,11 +194,12 @@ const ShoppingCartPage = () => {
                 </div>
                 <div className="text-right">
                   <p className="font-bold tracking-wider opacity-85">
-                    DA {item.price.toFixed(2) * quantities[item.id]}
+                    DA{" "}
+                    {(item.price * quantities[item.variants[0].sku]).toFixed(2)}
                   </p>
                   <button
                     className="text-gray-500 mt-2 hover:scale-110 transform transition-transform duration-300"
-                    onClick={() => handleRemoveItem(item.id)}
+                    onClick={() => handleRemoveItem(item.variants[0].sku)}
                   >
                     <Trash2 />
                   </button>
@@ -197,13 +232,13 @@ const ShoppingCartPage = () => {
             {discount > -1 && (
               <div className="flex justify-between text-green-600">
                 <span>Discount</span>
-                <span>-DA {discount > 0 ? discount.toFixed(2) : "0"}</span>
+                <span>-DA {discount.toFixed(2)}</span>
               </div>
             )}
 
             <div className="flex justify-between font-bold">
               <span>Total</span>
-              <span>DA {orderSummary.subtotal.toFixed(2)}</span>
+              <span>DA {orderSummary.total.toFixed(2)}</span>
             </div>
           </div>
         </div>

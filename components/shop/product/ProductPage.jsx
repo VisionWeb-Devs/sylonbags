@@ -1,7 +1,8 @@
 "use client";
 import { Roboto } from "next/font/google";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -9,6 +10,7 @@ const roboto = Roboto({
 });
 
 const ProductPage = ({ product }) => {
+  const router = useRouter();
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants[0] || null
   );
@@ -31,6 +33,33 @@ const ProductPage = ({ product }) => {
 
   const [activeImage, setActiveImage] = useState(images[0]);
   const [amount, setAmount] = useState(1);
+
+  const addToCart = () => {
+    const existingCart = JSON.parse(localStorage.getItem("SylonCart") || "[]");
+
+    const existingItemIndex = existingCart.findIndex(
+      (item) => item.id === product.id && item.sku === selectedVariant.sku
+    );
+
+    if (existingItemIndex > -1) {
+      existingCart[existingItemIndex].quantity += amount;
+    } else {
+      existingCart.push({
+        id: product.id,
+        name: product.name,
+        slug: product.slug,
+        sku: selectedVariant.sku,
+        price: selectedVariant.price,
+        quantity: amount,
+        variants: product.variants,
+      });
+    }
+
+    localStorage.setItem("SylonCart", JSON.stringify(existingCart));
+
+    // router.push("/cart");
+  };
+
   const handleColorChange = (e) => {
     const colorName = e.target.value;
     const newVariant = product.variants.find(
@@ -78,7 +107,7 @@ const ProductPage = ({ product }) => {
           {product.name}
         </h1>
         <p className="text-[30px] mt-2 tracking-widest opacity-80">
-          DA {product.price}
+          DA {(selectedVariant?.price).toFixed(2)}
         </p>
 
         {availableColors.length > 0 && (
@@ -116,7 +145,10 @@ const ProductPage = ({ product }) => {
         </div>
 
         <div className="flex flex-col">
-          <button className="bg-white text-black border-black border-[1px] rounded-sm font-light tracking-widest p-2 mt-4 opacity-80 hover:opacity-100 transition-all duration-300">
+          <button
+            onClick={addToCart}
+            className="bg-white text-black border-black border-[1px] rounded-sm font-light tracking-widest p-2 mt-4 opacity-80 hover:opacity-100 transition-all duration-300"
+          >
             Add to Cart
           </button>
           <button className="bg-[#ffddd5] text-black rounded-sm font-light tracking-widest p-2 mt-4 opacity-80 hover:opacity-100 transition-all duration-300">

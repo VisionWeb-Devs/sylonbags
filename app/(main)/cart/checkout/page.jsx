@@ -19,6 +19,20 @@ const Checkout = () => {
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderInfo, setOrderInfo] = useState(null);
 
+  const [checkoutData, setCheckoutData] = useState(null);
+  useEffect(() => {
+    const storedCheckoutData = localStorage.getItem("checkoutData");
+    if (storedCheckoutData) {
+      const parsedData = JSON.parse(storedCheckoutData);
+      setCheckoutData(parsedData);
+      console.log("Checkout Data:", parsedData);
+    }
+  }, []);
+  console.log(checkoutData);
+  const cartItems = checkoutData?.items || [];
+  const subtotal = checkoutData?.subtotal || 0;
+  const total = subtotal + shippingPrice;
+
   useEffect(() => {
     if (selectedWilaya) {
       const selected = wilayaData.find((w) => w.id === selectedWilaya);
@@ -27,32 +41,6 @@ const Checkout = () => {
       }
     }
   }, [selectedWilaya]);
-
-  const cartItems = [
-    {
-      id: 1,
-      name: "Classic Leather Tote",
-      variant: "Camel",
-      price: 5990,
-      quantity: 1,
-      image:
-        "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671481/medium_248_EFBA_9_7_C5_D_407_D_9821_445780_BC_79_E5_0c9876b62e.jpg",
-    },
-    {
-      id: 2,
-      name: "Designer Crossbody",
-      variant: "Blue",
-      price: 4290,
-      quantity: 1,
-      image:
-        "https://res.cloudinary.com/dvlrca4nn/image/upload/v1740671481/medium_248_EFBA_9_7_C5_D_407_D_9821_445780_BC_79_E5_0c9876b62e.jpg",
-    },
-  ];
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-  const total = subtotal + shippingPrice;
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -85,7 +73,7 @@ const Checkout = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
+  console.log("hello", cartItems);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
@@ -125,6 +113,8 @@ const Checkout = () => {
 
         setIsSubmitting(false);
         setOrderComplete(true);
+        localStorage.removeItem("checkoutData");
+        localStorage.removeItem("SylonCart");
       }, 1500);
     }
   };
@@ -142,9 +132,9 @@ const Checkout = () => {
     ${cartItems
       .map(
         (item) =>
-          `${item.name} (${item.variant}) x${
-            item.quantity
-          }: ${item.price.toLocaleString()}.00 DA`
+          `${item.name} (${item.variant || "N/A"}) x${item.quantity}: ${(
+            item.price * item.quantity
+          ).toLocaleString()}.00 DA`
       )
       .join("\n")}
     
@@ -531,11 +521,12 @@ const Checkout = () => {
 
                 <div className="space-y-4 mb-6">
                   {cartItems.map((item) => (
-                    <div key={item.id} className="flex items-center">
+                    <div key={item.sku} className="flex items-center">
                       <div className=" bg-zinc-100 rounded-md flex items-center justify-center mr-4 aspect-square object-cover">
                         <Image
                           src={item.image}
                           width={100}
+                          alt="..."
                           height={100}
                         ></Image>
                       </div>
@@ -587,6 +578,7 @@ const Checkout = () => {
                 </div>
 
                 <button
+                  onClick={handleSubmit}
                   type="submit"
                   className={`w-full mt-6 py-3 px-4 bg-[#ffddd5] hover:bg-[#f6b5a6] text-gray-800 rounded-md transition duration-200 flex items-center justify-center ${
                     isSubmitting ? "opacity-75 cursor-not-allowed" : ""
