@@ -17,7 +17,7 @@ const Categories = () => {
   const categories = [
     {
       id: "1",
-      link: "category/womens-bags",
+      link: "category/women",
       name: "Women's Bags",
       desc: "Shop our collection of elegant women's handbags",
       image:
@@ -25,7 +25,7 @@ const Categories = () => {
     },
     {
       id: "2",
-      link: "category/mens-bags",
+      link: "category/men",
       name: "Men's Bags",
       desc: "Discover premium leather bags for men",
       image:
@@ -33,7 +33,7 @@ const Categories = () => {
     },
     {
       id: "3",
-      link: "category/travel-bags",
+      link: "category/wallets",
       name: "Travel Bags",
       desc: "Perfect companions for your journeys",
       image:
@@ -41,18 +41,13 @@ const Categories = () => {
     },
     {
       id: "4",
-      link: "category/accessories",
+      link: "category/backpacks",
       name: "Accessories",
       desc: "Wallets, cardholders and more",
       image:
         "https://cdn.discordapp.com/attachments/868137008634155089/1344732061684207728/image.png?ex=67c1fad3&is=67c0a953&hm=5a7b2abf050b5b36e8031f7140dadb0f7051b7286936d0b0c3940eb8a72e9ea9&",
     },
   ];
-  // const { data, loading, error } = useFetchData(
-  //   process.env.NEXT_PUBLIC_BACKEND_URL +
-  //     `/products?filters[categories][slug][$eq]=${category_slug}&pagination[limit]=4&populate=*`
-  // );
-  // console.log(data);
 
   return (
     <div className="py-10 justify-center items-center flex flex-col tracking-wider">
