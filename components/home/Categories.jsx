@@ -1,5 +1,9 @@
 import React from "react";
 import { Playfair, Roboto } from "next/font/google";
+import womenbags from "@/assets/home/womenbags.png";
+import mansbags from "@/assets/home/mansbags.png";
+import bags from "@/assets/home/bags.png";
+import handbag from "@/assets/home/handbag.png";
 
 const playfair = Playfair({
   subsets: ["latin"],
@@ -17,29 +21,25 @@ const Categories = () => {
       id: "1",
       name: "Women's Bags",
       desc: "Shop our collection of elegant women's handbags",
-      image:
-        "https://cdn.discordapp.com/attachments/868137008634155089/1344731934525362277/image.png?ex=67c1fab5&is=67c0a935&hm=32c2ca247530aa0c8019c2aaffc0b7f88ff67bd095d2d01e499e625ce592dd4d&",
+      image: womenbags.src,
     },
     {
       id: "2",
       name: "Men's Bags",
       desc: "Discover premium leather bags for men",
-      image:
-        "https://cdn.discordapp.com/attachments/868137008634155089/1344731965290450954/image.png?ex=67c1fabc&is=67c0a93c&hm=969b1a285c9a67d8fdbf11abe8368bc1e4a5eea231eae61a6e3282f61a4bdc1a&",
+      image: mansbags.src,
     },
     {
       id: "3",
       name: "Travel Bags",
       desc: "Perfect companions for your journeys",
-      image:
-        "https://cdn.discordapp.com/attachments/868137008634155089/1344732028935077919/image.png?ex=67c1facb&is=67c0a94b&hm=790a7151e54a97f5557237c89fda99d0dd6e40456b60df830366be22b85b8454&",
+      image: bags.src,
     },
     {
       id: "4",
       name: "Accessories",
       desc: "Wallets, cardholders and more",
-      image:
-        "https://cdn.discordapp.com/attachments/868137008634155089/1344732061684207728/image.png?ex=67c1fad3&is=67c0a953&hm=5a7b2abf050b5b36e8031f7140dadb0f7051b7286936d0b0c3940eb8a72e9ea9&",
+      image: handbag.src,
     },
   ];
 
